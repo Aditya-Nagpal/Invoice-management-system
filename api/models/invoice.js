@@ -1,10 +1,12 @@
 const mongoose=require('mongoose');
 
 const invoiceSchema=new mongoose.Schema({
-    invoice_number: {type: Number, required: true},
-    costumer_id: {type: mongoose.Schema.ObjectId, required: true},
+    invoiceNumber: {type: Number, required: true},
+    costumerId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     amount: {type: Number, required: true},
-    due_date: {type: Date, required: true},
+    invoiceDate: {type: Date, required: true},
+    dueDate: {type: Date, required: true},
+    billTo: {type: String, required: true},
     status: {type: String, enum: ['paid','unpaid'], default: 'unpaid'}
 },{timestamps: true});
 

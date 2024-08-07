@@ -3,11 +3,11 @@ import AdbIcon from '@mui/icons-material/Adb';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-export default function HomeHeader({emptyToken}) {
+export default function HomeHeader({resetStates}) {
     const navigate=useNavigate();
 
     const Logout= () => {
-        emptyToken();
+        resetStates();
         localStorage.removeItem('jwt-token');
         navigate('/login')
     };

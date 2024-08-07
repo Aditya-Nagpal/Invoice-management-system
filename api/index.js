@@ -5,7 +5,7 @@ require('dotenv').config();
 const db=require('./config/mongoose');
 
 app.use(cors());
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 app.use('/api',require('./routes/index'));

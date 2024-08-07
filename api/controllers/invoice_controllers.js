@@ -21,3 +21,19 @@ module.exports.fetchAll=async (req,res) => {
         return res.status(500).json({msg: '******Internal server error******'},error);
     }
 };
+
+module.exports.create=async (req,res) => {
+    const {invoiceNumber,costumerId,amount,invoiceDate,dueDate,billTo,status}=req.body;
+    try {
+        let invoice=await Invoice.create({invoiceNumber,costumerId,amount,invoiceDate,dueDate,billTo,status});
+        const costumer=await User.findById(costumerId);
+        invoice=await invoice.populate('')
+        costumer.invoices.push(invoice);
+        // await costumer.populate('invoices');
+        await costumer.save();
+        return res.status(200).json({msg: 'Invoice created',costumer});
+    } catch (error) {
+        console.log('Error in creating invoice',error);
+        return res.status(500).json({msg: '******Internal server error******',error});
+    }
+}
