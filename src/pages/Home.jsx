@@ -5,9 +5,16 @@ import { PuffLoader } from 'react-spinners';
 import HomeHeader from '../components/HomeHeader';
 import AddIcon from '@mui/icons-material/Add';
 import AddInvoiceForm from '../components/AddInvoiceForm';
+import { Typography } from '@mui/joy';
 
 export default function Home() {
   const navigate=useNavigate();
+
+  useEffect(() => {
+    if(localStorage.getItem('jwt-token') === null){
+      navigate('/login');
+    }
+  },[]);
 
   const [isLoading,setIsLoading]=useState(false);
   const [token,setToken]=useState('');
@@ -40,7 +47,7 @@ export default function Home() {
   },[]);
 
   useEffect(() => {
-    console.log(user.invoices);
+    // console.log(user.invoices);
     setInvoices(user.invoices);
   },[user]);
 
@@ -62,15 +69,17 @@ export default function Home() {
             >
               Add Invoice
             </Button>
+            <hr></hr>
             {
               showAddForm ? (
-                <AddInvoiceForm close={() => setShowAddForm(false)} costumerId={user._id} updateUser={(user) => setUser(user)} />
+                <AddInvoiceForm close={() => setShowAddForm(false)} costumerId={user._id} updateUser={(user) => setUser(JSON.parse(user))} />
               ) : null
             }
-            <List>
+            <List sx={{margin: 0, padding: '0px 20px'}}>
+              <Typography level='h2' sx={{color: 'darkgrey'}}>Invoices</Typography>
               {
                 invoices && invoices.map((invoice,index) => (
-                  <ListItem>{invoice}</ListItem>
+                  <ListItem key={index}>{invoice}</ListItem>
                 ))
               }
             </List>

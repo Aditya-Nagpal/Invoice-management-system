@@ -17,8 +17,7 @@ export default function AddInvoiceForm({close,costumerId,updateUser}) {
                     Authorization: `Bearer ${localStorage.getItem('jwt-token')}`
                 }
             })
-            // console.log(res.data);
-            updateUser(res.data.costumer);
+            updateUser(JSON.stringify(res.data.costumer));
         } catch (error) {
             console.log('Error in posting invoice',error);
         }

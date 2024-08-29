@@ -27,7 +27,7 @@ module.exports.create=async (req,res) => {
     try {
         let invoice=await Invoice.create({invoiceNumber,costumerId,amount,invoiceDate,dueDate,billTo,status});
         const costumer=await User.findById(costumerId);
-        invoice=await invoice.populate('')
+        // invoice=await invoice.populate('')
         costumer.invoices.push(invoice);
         // await costumer.populate('invoices');
         await costumer.save();
